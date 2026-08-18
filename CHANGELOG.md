@@ -7,6 +7,18 @@ Sürüm numarası tek bir yerden gelir: `kpm/__init__.py` → `__version__`.
 
 ---
 
+## [4.2] — 18.08.2026
+
+### Değişti
+- **"Güncellemeleri Denetle" düğmesi eklendi.** Güncellemeyi artık istediğin an
+  elle denetleyebilirsin; sonuç ne olursa olsun (güncelsin / yeni sürüm var)
+  program sana söyler.
+- **Açılışta otomatik denetim artık VARSAYILAN OLARAK KAPALI.** Program sen
+  istemedikçe internete kendiliğinden çıkmaz. İstersen sol alttaki
+  **"Açılışta otomatik denetle"** kutusunu işaretleyebilirsin.
+
+---
+
 ## [4.1] — 18.08.2026
 
 ### Yeni
