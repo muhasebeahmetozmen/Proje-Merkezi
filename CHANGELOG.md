@@ -8,6 +8,57 @@ Sürüm numarası tek bir yerden gelir: `kpm/__init__.py` → `__version__`.
 ---
 
 
+## v5.1 — Kullanım turu düzeltmeleri
+
+Üç araçta, günlük kullanımda göze çarpan üç sorun giderildi. **Yeni araç yok,
+ayarlarınız ve kayıtlı listeleriniz olduğu gibi kalıyor.**
+
+### 🔴 Düzeltildi — Otobüsçü Fatura Kesme: yeni mükellefe başkasının IBAN'ı yazılıyordu
+
+**"Yeni Mükellef"** penceresi bir önceki mükellefin **ödeme şeklini, kanalını
+ve IBAN'ını** hazır getiriyordu. Kolaylık olsun diye konmuştu ama tehlikeliydi:
+adı yazıp Kaydet'e basınca, altta duran ödeme bilgileri fark edilmeden yeni
+mükellefe geçiyor ve **fatura başkasının hesabını gösteriyordu**.
+
+Pencere artık **boş açılıyor**. Var olan bir mükellefi **✏ ile düzenlerken**
+kendi bilgileri yine dolu geliyor; kayıtlı mükelleflerinizin ödeme bilgilerine
+dokunulmadı.
+
+### Düzeltildi — Banka Ekstresi Adlandırma: Kuveyt Türk hesap numarası
+
+Kuveyt Türk ekstreleri **IBAN'ın son 4 hanesiyle** adlandırılıyordu. O haneler
+bu bankada `0001` gibi anlamsız bir kuyruk oluyor ve **aynı müşterinin bütün ek
+hesapları aynı ada düşüyordu** — dosyaları birbirinden ayırmak mümkün değildi.
+
+Artık ekstrenin başlığındaki gerçek hesap okunuyor:
+
+| Ekstre başlığı | Eski ad | Yeni ad |
+|---|---|---|
+| `Hesap Bilgisi:  7062710 - 1` | `kuveyt türk 0001` | **`kuveyt türk 2710-1`** |
+
+Yani **hesap numarasının son 4 hanesi + ek numarası**. Kuveyt Türk'ün IBAN'sız
+ekstre biçimi de aynı adı üretiyor (eskiden `1658 - 1` yazıyordu, artık
+`1658-1`) — aynı hesap, hangi biçimde gelirse gelsin **tek bir ada** düşüyor.
+
+⚠️ Diğer bankalar **etkilenmedi**: Denizbank yine son 6 hane (`7000 06`),
+kalanlar son 4 hane.
+
+### Düzeltildi — Araç Satış Yazısı: Marka ve Model örnekleri tersti
+
+Alanlardaki sönük örnekler yer değiştirdi. Program zaten
+*"… PLAKALI **2026** MODEL **RENAULT CLIO 1.5 DCI**, …"* cümlesini kuruyor;
+örnekler ters olduğu için sizi ters doldurmaya yönlendiriyordu.
+
+| Alan | Eski örnek | Yeni örnek |
+|---|---|---|
+| Marka | `RENAULT` | **`RENAULT CLIO 1.5 DCI`** |
+| Model | `CLIO 1.5 DCI` | **`2026`** (araç yılı) |
+
+### Notlar
+- Birim test **916 → 924**; üç düzeltmenin her biri testle kilitlendi.
+- Yeni bağımlılık yok, kurulum boyutu değişmedi.
+
+
 ## v5.0 — Altı yeni araç (7 → 13)
 
 > GitHub'da son yayımlanan sürüm **v4.5**'ti. O günden bu yana eklenen
@@ -217,125 +268,6 @@ sınırını aşıyordu. Program dosyayı yazıyor ama **Excel açamıyordu**.
 - Eski program **silinmedi**; yeni modül gerçek bir ayı işleyip çıktılar
   karşılaştırılana kadar duruyor.
 - Program artık **13 araç** barındırıyor. Birim test 636 → **710**.
-
-## [4.9.1] — 24.08.2026
-
-### 🔴 Düzeltildi — Fatura Kalem Listesi portala yüklenmiyordu
-
-Üretilen dosya EDM portalında **"EXCELDEN SATIR YÜKLE"** kısmında hata
-veriyordu. Portalda uçtan uca denendi; **dört ayrı sorun** çıktı ve hepsi
-giderildi.
-
-- **Dosya hiç açılamıyordu.** Portal *"External table is not in the expected
-  format"* diyordu. Dosya artık `.xlsx` olarak üretiliyor ve portal sorunsuz
-  kabul ediyor. (Masaüstüne düşen dosyanın uzantısı `.xls` yerine `.xlsx`
-  oldu; portala yükleme şekliniz değişmiyor.)
-
-- **🔴 Kesirli miktar ON KAT yazılıyordu.** Portal miktarı, kendi
-  şablonundaki talimatın **tersine**, nokta ile okuyor: `2,5` yazılınca
-  **25** olarak alıyordu. `0,25` ise **25** oluyordu (100 kat). Tam
-  sayılarda fark olmadığı için bugüne kadar görünmemişti. Artık miktar
-  portalın okuduğu biçimde yazılıyor; ekranda yine Türkçe (`2,5`)
-  görüyorsunuz.
-
-- **🔴 Ölçü birimlerinin bir kısmı portalda yoktu.** Şablondaki listede
-  bulunan **Ton · Metre kare · Santimetre kare · Santimetre küp · Milimetre
-  küp · Kilowatt saat · Kilo Joule · Net Ton · Gros Ton · Ayak kare**
-  portalda başka yazılıyor; bunlardan biri seçilince **dosyanın tamamı**
-  reddediliyordu. Liste portaldan alınıp **45 birimin her biri tek tek
-  denenerek** doğrulandı. Yeni birimler de geldi: **Takım, Rulo, Palet,
-  Karat, Fıçı, Kamyon Yükü, Megavat saat, Bin metreküp, Kare decimetre.**
-  Eski yazımlar (ör. "Metre kare") yapıştırdığınızda kendiliğinden
-  yenisine çevriliyor.
-
-- **🔴 Tevkifat oranı ekranda başka, faturada başka çıkıyordu.** Portal
-  "Tevkifat Oranı" sütununu **hiç okumuyor**; oranı **tevkifat koduna**
-  göre kendisi belirliyor (601 → 4/10, 603 → 7/10, 606 → 9/10…). Artık
-  program da oranı koddan alıyor, böylece ekrandaki tevkifat tutarı
-  faturadakiyle aynı.
-
-### Eklendi — KDV %0 satırında **istisna kodu listesi**
-
-Program KDV %0 seçince "neden sıfır?" diye serbest metin istiyordu. Oysa
-portalda **istisna kodunu** verince açıklamayı portal kendisi dolduruyor.
-Artık kod listeden seçiliyor (portalın **74 istisna kodu**, açıklamalarıyla).
-
-- **Tek "İstisna / Tevkifat Kodu" sütunu.** Şablonda da tek sütun var
-  (başlığı zaten *"Tevkifat Kodu/İstisna Kodu"*). Satırın KDV'si %0 ise
-  hücre **istisna kodlarını**, değilse (ve tevkifat açıksa) **tevkifat
-  kodlarını** gösterir. İki ayrı sütun olsaydı ikisini birden doldurmak
-  mümkün olurdu — dosyaya yalnız biri gider, sessizce yanlış fatura.
-- **Kod seçilmeden KDV %0 satır kaydedilmiyor.** Portalda ölçüldü: kodsuz
-  satırda istisna alanı BOŞ kalıyor, serbest metin oraya yazılmıyor.
-- **🔴 Tanımsız kod sessizce düşüyor.** Portal "999" gibi geçersiz bir kodu
-  **hata vermeden** yok sayıyor; dosya "yüklendi" diyor ama fatura istisna
-  sebebi olmadan kalıyor. Program bu yüzden kodu önceden denetliyor.
-
-### Eklendi — **Fatura Türü** seçici: Özel Matrah ve İhraç Kayıtlı kodları
-
-Portalda fatura tipini **Özel Matrah** seçince kalem satırı `812` gibi özel
-matrah kodları istiyor; programda o kodlara **hiç ulaşılamıyordu**. Artık
-kalem tablosunun üstünde portaldaki gibi bir **Fatura Türü** seçici var:
-
-| Fatura Türü | Kalem satırında gelen kodlar |
-|---|---|
-| Normal | — (KDV %0 satırda istisna kodları) |
-| Tevkifatlı | tevkifat kodları (27) + oran sütunu |
-| Özel Matrah | özel matrah kodları (**801–812**) |
-| İhraç Kayıtlı | ihraç kayıtlı kodları (**701–704**) |
-
-**KDV %0 yazdığınız satırda istisna kodları türden bağımsız gelir** — o
-satırın sebebi her zaman istisnadır (tevkifat KDV üzerinden hesaplandığı
-için KDV %0 satırda anlamsızdır).
-
-### 🔴 Kod listeleri portaldan yeniden çıkarıldı — üçü de eksikmiş
-
-Portalın indirilebilir kod listesi bayat çıktı. Canlı listeden okunup
-yükleme ile doğrulandı:
-
-| Liste | Eskiden | Portalda | Eksik olan |
-|---|---|---|---|
-| İstisna | 74 | **84** | 10 kod (241, 242, 328, 330–335…) |
-| Özel Matrah | — | **12** | `812` indirilebilir listede YOK |
-| İhraç Kayıtlı | — | **3** | — |
-
-### Değişti — modül düzeni gözden geçirildi
-
-- **Sütun sayısı 12 → 11.** "KDV Sıfır Açıklaması" ve "Tevkifat Kodu" tek
-  koda birleşti; her iki hâlde de 1024 px'te yatay kaydırma yok.
-- **🔴 "Genel Toplam" yanlış bilgi veriyordu.** Tevkifat çıkınca aynı
-  etiketin altına *ödenecek* tutar yazılıyordu. Artık **Genel Toplam** ve
-  **Ödenecek** ayrı; hangisi asıl rakamsa o büyük gösteriliyor.
-- **Tevkifat ve Ödenecek kutuları** yalnız tevkifatlı faturada görünüyor.
-- **"Tutar" sütunu "Matrah" oldu** — gösterdiği değer buydu.
-- Kalem **sayacı** başlıkta; ipucu yalnız liste boşken görünüyor.
-- Kod/oran hücrelerine ve düğmelere açıklayıcı ipuçları eklendi.
-- Panodan yapıştırmada **7. sütun kod** olarak okunuyor.
-
-### Düzeltildi — özel matrah kuralı
-
-- **Özel Matrah faturasında artık en az bir kalemin kodu ZORUNLU** (belge
-  düzeyinde). Kodlu tek kalem varsa diğerleri kodsuz olabilir.
-- **100 kalemin üzerinde uyarı:** portalın gerçek satır sınırı bilinmediği
-  için yükledikten sonra portaldaki satır sayısını doğrulamanız istenir.
-
-### 🔴 Düzeltildi — modül denetiminde çıkan sessiz hatalar
-
-- **Panodan yapıştırılan kod kayboluyordu.** Fatura türü uymadığında kod
-  sessizce düşüyordu; artık tür koda göre kendiliğinden seçiliyor.
-- **Sınırı aşan satırlar sessizce atılıyordu.** 500 kalem sınırına takılan
-  satır sayısı artık söyleniyor.
-- **Aynı dakikada ikinci kayıt birincisini eziyordu.** Artık " (2)" eklenip
-  var olan dosyaya dokunulmuyor.
-- **Üretilen dosyanın bilgi sayfası portalda geçersiz birimleri
-  listeliyordu**; artık doğrulanmış 45 birim yazılıyor.
-- Özel Matrah / İhraç Kayıtlı faturasında **kodsuz satır uyarılıyor**.
-
-### Değişti
-- Kalem dosyası artık **.xlsx**; `xlwt` bağımlılığı kaldırıldı (kurulum
-  biraz küçüldü).
-
----
 
 ---
 
