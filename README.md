@@ -1,26 +1,24 @@
-<div align="center">
+# Proje Merkezi · Muhasebecinin Araç Kutusu
 
-# Proje Merkezi
+[![Son Sürüm](https://img.shields.io/github/v/release/muhasebeahmetozmen/Proje-Merkezi?label=son%20s%C3%BCr%C3%BCm&color=0F766E)](https://github.com/muhasebeahmetozmen/Proje-Merkezi/releases/latest)
+[![Toplam İndirme](https://img.shields.io/github/downloads/muhasebeahmetozmen/Proje-Merkezi/total?label=toplam%20indirme&color=115E59)](https://github.com/muhasebeahmetozmen/Proje-Merkezi/releases)
+![Platform](https://img.shields.io/badge/platform-Windows%2010%20%2F%2011%20(64--bit)-2CB7A8)
+[![Lisans](https://img.shields.io/badge/lisans-MIT-334155)](LICENSE)
 
-**Türk muhasebeciler için tek pencerede 13 araç.**
-GİB kesinti (stopaj) tarama · e-fatura tevkifat taraması · KDV ve matrah
-hesaplama · banka ekstresi adlandırma · proforma fatura · toplu fatura kesme.
-Hepsi Türkçe, kurulumu tek tık, yönetici yetkisi istemez.
+Mükelleflerin **adına yapılan kesintileri (stopaj)** GİB'den toplu çeken; EDM'de
+**tevkifatlı alış faturalarını** tarayan; **matrah, KDV ve tevkifatı** geriye
+doğru çözen; **banka ekstrelerini içeriğinden tanıyıp** adlandıran; **proforma
+fatura** ve **toplu fatura taslağı** üreten; pazaryeri satış raporlarını
+**muhasebe hesap kodlarıyla zenginleştirip** programa hazır hâle getiren, tek
+pencerede **13 araçlık** Windows masaüstü uygulaması.
 
-[![Sürüm](https://img.shields.io/badge/s%C3%BCr%C3%BCm-5.0-2ea44f?style=for-the-badge)](../../releases/latest)
-[![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078d4?style=for-the-badge&logo=windows&logoColor=white)](../../releases/latest)
-[![Lisans](https://img.shields.io/badge/lisans-MIT-8b5cf6?style=for-the-badge)](LICENSE)
+> ℹ️ Bu depo yalnızca **kurulum dosyalarını** barındırır. Programın güncel
+> sürümünü aşağıdan indirebilirsiniz.
 
 ### [⬇️  Programı İndir](../../releases/latest)
 
-<sub>Python veya başka bir kurulum gerekmez · Yönetici yetkisi istemez</sub>
-
-<br>
-
-
-</div>
-
-<br>
+<sub>Python veya başka bir kurulum gerekmez · Yönetici yetkisi istemez ·
+Windows 10 / 11 (64-bit)</sub>
 
 ---
 
