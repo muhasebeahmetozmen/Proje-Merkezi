@@ -80,7 +80,8 @@ internet yoksa sessizce vazgeçilir.
 
 **Ayarlarınız, mükellef listeleriniz ve EDM kimliğiniz güncellemede kaybolmaz.**
 
-Nelerin değiştiğini [CHANGELOG.md](CHANGELOG.md) dosyasından görebilirsiniz.
+Hangi sürümde neyin değiştiğini **[Sürümler sayfasından](../../releases)**
+görebilirsiniz; her sürüm kendi notuyla birlikte durur.
 
 ---
 
